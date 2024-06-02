@@ -1,20 +1,24 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Chat() {
   const [items, setItems] = useState([]);
   const [message, setMessage] = useState("");
+  const [user, setUser] = useState('usuario');
+  const navigate = useNavigate();
 
-  function addItem(event) {
+  async function addItem(event) {
     event.preventDefault();
 
     if (message.trim() !== "") {
       const newItem = {
         id: Date.now(),
         text: message,
+        user: user,
       };
 
       setItems((prevItems) => [...prevItems, newItem]);
-      setMessage(""); // Clear the input field after adding the message
+      setMessage(""); // Limpa o campo de entrada após adicionar a mensagem
     }
   }
 
@@ -34,43 +38,70 @@ export default function Chat() {
     }
   }, [items]);
 
+  function trocarUsuario() {
+    setUser((prevUser) => (prevUser === 'usuario' ? 'atendente' : 'usuario'));
+  }
+
+  function limparMensagens() {
+    setItems([]); // Limpa todas as mensagens
+  }
+
   return (
-    <div className="p-6 flex h-screen min-w-md items-center justify-center bg-gray-100">
-      <div className="mt-6 w-full max-w-md rounded bg-white p-6 shadow-md">
+    <div className="flex h-screen items-center justify-center bg-gray-100 p-6">
+      <div className="w-full max-w-md rounded bg-white p-6 shadow-md">
         <fieldset>
-          <h2 className="mb-5 text-3xl font-semibold text-gray-800 text-center">
+          <h2 className="mb-5 text-center text-3xl font-semibold text-gray-800">
             Atendimento Online
           </h2>
-          <p className="mb-5 font-semibold text-gray-800 text-center">
+          <div className="mb-4 flex justify-between">
+            <button
+              type="button"
+              onClick={() => navigate("/Login")}
+              className="rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
+            >
+              Voltar
+            </button>
+            <button
+              type="button"
+              onClick={limparMensagens}
+              className="rounded bg-red-500 px-4 py-2 font-semibold text-white hover:bg-red-600"
+            >
+              Apagar
+            </button>
+          </div>
+          <p className="mb-5 text-center font-semibold text-gray-800">
             Chat com nossos atendentes
           </p>
-          <ul className="mb-4 max-w-md overflow-y-auto border border-black p-2">
+          <ul className="mb-4 max-h-60 overflow-y-auto rounded border p-2">
             {items.map((item) => (
-              <li key={item.id} className="p-2 border border-gray-400">
+              <li key={item.id} className={`mb-2 rounded p-2 ${item.user === 'usuario' ? 'bg-gray-200' : 'bg-blue-200'}`}>
+                {item.user === 'usuario' ? 'Você diz:' : 'Atendente diz:'}
+                <br />
                 {item.text}
               </li>
             ))}
           </ul>
           <form onSubmit={addItem}>
-            <div className="flex justify-between space-x-4">
+            <div className="flex space-x-4">
               <input
                 id="mensagem"
                 name="texto"
                 type="text"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="box-border mt-1 block w-full rounded border border-gray-300 p-1.5 focus:border-teal-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className="box-border block w-full rounded border border-gray-300 p-1.5 focus:border-teal-500 focus:ring focus:ring-teal-500 focus:ring-opacity-50"
+                placeholder="Digite sua mensagem"
               />
               <button
                 type="submit"
-                className="font-semibold rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:pointer-events-none disabled:opacity-25"
+                className="rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
               >
                 Enviar
               </button>
               <button
                 type="button"
-                className="font-semibold rounded bg-white px-4 py-2 text-black hover:bg-gray-300 disabled:pointer-events-none disabled:opacity-25"
-                onClick={() => setItems([])}
+                onClick={trocarUsuario}
+                className="rounded bg-white px-4 py-2 font-semibold text-black hover:bg-gray-300"
               >
                 Trocar
               </button>
