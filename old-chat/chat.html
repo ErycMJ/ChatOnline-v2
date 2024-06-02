@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Tarefa Chat-Online</title>
+        <link rel="stylesheet" href="chat.css"/>
+    </head>
+
+    <body>
+        <main>
+            <div id="page" class="page"> 
+                <header>
+                    <div class="cabecalho">
+                        <h2>Atendimento Online</h2>
+                        <h4>Chat com nossos atendentes</h4>
+                    </div>
+                </header>   
+
+                <div class="chat">
+                    <div class="atendente">
+                        <div class="msg-user"> Atendente diz:<strong></strong></div>
+                        <div class="msg-user-chat"> Este lado é do atendente<strong></strong></div>
+                    </div>
+
+                    <div class="usuario">
+                        <div class="msg-user"> Você diz:<strong></strong></div>
+                        <div class="msg-user-chat"> E esse é do cliente<strong></strong></div>
+                    </div>
+                    
+                </div>
+
+                <form id="form-chat-send" action="chat.html" method="post">
+                    <div class="text-box">
+                        <input id="enviar" type="text" id="digite" name="digite" placeholder="Digite algo..."></input>
+                    </div>
+
+                    <div class="buttons">
+                        <button type="submit">Enviar</button>
+                        <button id='user-change' type="button">Trocar</button>
+                    </div>
+                </form>            
+            </div>
+            
+            <script>
+                let user = 'usuario';
+
+                function enviarMsg(event){
+                    event.preventDefault();
+                
+                    const enviar = document.querySelector('#enviar');
+
+                    if(enviar.value !== ''){
+                    console.log(enviar)
+
+                    const mensagem = document.createElement('div');
+                    if(user === 'usuario'){
+                        mensagem.innerHTML = `<div class="msg-user"> Você diz:<strong></strong></div>
+                                              <div class="msg-user-chat"> ${enviar.value} <strong></strong></div>`;
+                        mensagem.classList.add(user);
+                    } else{
+                        mensagem.innerHTML = `<div class="msg-user"> Atendente diz:<strong></strong></div>
+                                              <div class="msg-user-chat"> ${enviar.value} <strong></strong></div>`;
+                        mensagem.classList.add(user);
+                    }
+
+                    const chat = document.querySelector('.chat');
+                    chat.appendChild(mensagem);
+
+                    enviar.value = '';
+                } else{
+                    console.log('Você não pode mandar uma mensagem vazia!', enviar)
+                }
+            }
+
+                function trocarUsuario(event){
+                    if(user === 'usuario'){
+                        user = 'atendente';
+                    } else{
+                        user = 'usuario';
+                    }
+                    
+                }
+
+                const buttonEnviar = document.querySelector('#form-chat-send');
+                buttonEnviar.addEventListener('submit', enviarMsg);
+                const buttonTrocar = document.querySelector('#user-change');
+                buttonTrocar.addEventListener('click', trocarUsuario);          
+            </script>
+        </main>
+    </body>
+</html>
