@@ -15,8 +15,9 @@ export default function Login() {
     const formData = new FormData(form);
     if (formData.get("email") !== "" && formData.get("senha") !== "") {
       const newItem = {
-        name: formData.get("email"),
-        qtd: formData.get("senha"),
+        nome: formData.get("nome"),
+        email: formData.get("email"),
+        senha: formData.get("senha"),
       };
 
       setItems([...items, newItem]);
@@ -46,18 +47,29 @@ export default function Login() {
   }, [items]);
 
   return (
-    <div className="p-6 flex h-screen items-center justify-center bg-gray-100">
+    <div className="min-h-screen bg-gray-100 p-6 flex items-center justify-center">
       <form
         onSubmit={addItem}
         method="get"
-        className="mt-6 w-full max-w-md rounded bg-white p-6 shadow-md"
+        className="bg-white p-6 rounded shadow-md w-full max-w-md"
       >
         <fieldset>
-          <h2 className="mb-5 text-3xl font-semibold text-gray-800 text-center">
+          <h2 className="text-3xl font-semibold text-gray-800 text-center mb-5">
             Bem-Vindo
           </h2>
           <div className="flex items-center justify-center mb-4">
             <LuUserCircle2 size={70} />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="userNome" className="block text-gray-700">
+              Nome
+            </label>
+            <input
+              id="userNome"
+              name="nome"
+              type="text"
+              className="mt-1 block w-full rounded border border-gray-300 p-2 focus:border-teal-500 focus:ring focus:ring-teal-500 focus:ring-opacity-50"
+            />
           </div>
           <div className="mb-4">
             <label htmlFor="userEmail" className="block text-gray-700">
@@ -67,11 +79,11 @@ export default function Login() {
               id="userEmail"
               name="email"
               type="text"
-              className="mt-1 block w-full rounded border border-gray-300 p-1.5 focus:border-teal-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded border border-gray-300 p-2 focus:border-teal-500 focus:ring focus:ring-teal-500 focus:ring-opacity-50"
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="userSenha" className="block text-gray-600 flex items-center">
+            <label htmlFor="userSenha" className="block text-gray-700 flex items-center">
               Senha
               <FaRegEye className="ml-2" />
               <FaRegEyeSlash className="ml-2" />
@@ -80,10 +92,10 @@ export default function Login() {
               id="userSenha"
               name="senha"
               type="password"
-              className="mt-1 block w-full rounded border border-gray-300 p-1.5 focus:border-teal-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded border border-gray-300 p-2 focus:border-teal-500 focus:ring focus:ring-teal-500 focus:ring-opacity-50"
             />
             {!!errorMessage && (
-              <div className="mt-1 font-semibold text-red-500">
+              <div className="mt-1 text-red-500 font-semibold">
                 {errorMessage}
               </div>
             )}
@@ -91,13 +103,13 @@ export default function Login() {
           <div className="flex justify-between space-x-4">
             <button
               type="submit"
-              className="font-semibold rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:pointer-events-none disabled:opacity-25"
+              className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600"
             >
               Entrar
             </button>
             <button
               type="button"
-              className="font-semibold rounded bg-white px-4 py-2 text-black hover:bg-gray-300 disabled:pointer-events-none disabled:opacity-25"
+              className="bg-gray-300 text-black font-semibold py-2 px-4 rounded hover:bg-gray-400"
             >
               Cadastrar
             </button>
