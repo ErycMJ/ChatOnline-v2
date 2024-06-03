@@ -8,25 +8,27 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  async function addItem(event) {
+  function addItem(event) {
     event.preventDefault();
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    if (formData.get("email") !== "" && formData.get("senha") !== "") {
+    const nome = formData.get("nome");
+    const email = formData.get("email");
+    const senha = formData.get("senha");
+
+    if (nome && email && senha) {
       const newItem = {
-        nome: formData.get("nome"),
-        email: formData.get("email"),
-        senha: formData.get("senha"),
+        nome: nome,
+        email: email,
+        senha: senha,
       };
 
       setItems([...items, newItem]);
-
       form.reset();
       setErrorMessage("");
 
-      // Navegar para a tela de chat após login bem-sucedido
-      navigate("/Chat");
+      navigate("/Chat", { state: { userName: nome }});
     } else {
       setErrorMessage("Preencha todos os campos!");
     }
