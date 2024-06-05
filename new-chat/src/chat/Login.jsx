@@ -6,6 +6,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 export default function Login() {
   const [items, setItems] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [passwordEye, setPasswordEye] = useState(false);
   const navigate = useNavigate();
 
   function addItem(event) {
@@ -70,7 +71,7 @@ export default function Login() {
               id="userNome"
               name="nome"
               type="text"
-              className="mt-1 block w-full rounded border border-gray-300 p-2 focus:border-teal-500 focus:ring focus:ring-teal-500 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded border border-gray-300 p-2 focus:ring-opacity-50"
             />
           </div>
           <div className="mb-4">
@@ -81,21 +82,24 @@ export default function Login() {
               id="userEmail"
               name="email"
               type="text"
-              className="mt-1 block w-full rounded border border-gray-300 p-2 focus:border-teal-500 focus:ring focus:ring-teal-500 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded border border-gray-300 p-2 focus:ring-opacity-50"
             />
           </div>
           <div className="mb-4">
             <label htmlFor="userSenha" className="block text-gray-700 flex items-center">
               Senha
-              <FaRegEye className="ml-2" />
-              <FaRegEyeSlash className="ml-2" />
             </label>
-            <input
-              id="userSenha"
-              name="senha"
-              type="password"
-              className="mt-1 block w-full rounded border border-gray-300 p-2 focus:border-teal-500 focus:ring focus:ring-teal-500 focus:ring-opacity-50"
-            />
+            <div className="relative">
+              <button onClick={() => setPasswordEye(!passwordEye)} type="button" className="absolute top-1/2 -translate-y-1/2 right-3">
+                {!passwordEye ? <FaRegEye /> : <FaRegEyeSlash />}
+              </button>
+              <input
+                id="userSenha"
+                name="senha"
+                type={!passwordEye ? "password" : "text"}
+                className="mt-1 block w-full rounded border border-gray-300 p-2 focus:ring-opacity-50"
+              />
+            </div>
             {!!errorMessage && (
               <div className="mt-1 text-red-500 font-semibold">
                 {errorMessage}
