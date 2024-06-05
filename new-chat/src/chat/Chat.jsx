@@ -61,7 +61,7 @@ export default function Chat() {
           <div className="mb-4 flex justify-between">
             <button
               type="button"
-              onClick={() => navigate("/Login")}
+              onClick={() => navigate("/")}
               className="rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
             >
               Voltar
@@ -96,7 +96,7 @@ export default function Chat() {
                 type="text"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="box-border block w-full rounded border border-gray-300 p-1.5 focus:border-teal-500 focus:ring focus:ring-teal-500 focus:ring-opacity-50"
+                className="box-border block w-full rounded border border-gray-300 p-1.5 focus:ring-opacity-50"
                 placeholder="Digite sua mensagem"
               />
               <button
